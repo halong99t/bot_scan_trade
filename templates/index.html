@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Binance Futures Unified Bot & Scanner</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b0e;
+    --card: #11151a;
+    --card-hover: #151a21;
+    --border: #202630;
+    --accent: #f0b90b;
+    --accent-glow: rgba(240, 185, 11, 0.15);
+    --green: #0ecb81;
+    --green-glow: rgba(14, 203, 129, 0.15);
+    --red: #f6465d;
+    --red-glow: rgba(246, 70, 93, 0.15);
+    --text: #eaecef;
+    --muted: #848e9c;
+    --input-bg: #191f26;
+    --radius: 12px;
+    --shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; 
+    font-size: 13px; 
+    overflow-x: hidden;
+    letter-spacing: 0.01em;
+  }
+
+  header {
+    background: rgba(17, 21, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--accent) 0%, #d89f05 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+  .logo-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: #000;
+  }
+  header h1 { 
+    font-size: 18px; 
+    font-weight: 700; 
+    background: linear-gradient(90deg, #ffffff 0%, var(--text) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .status-dot { 
+    width: 8px; 
+    height: 8px; 
+    border-radius: 50%; 
+    background: var(--muted); 
+    transition: all 0.3s;
+  }
+  .status-dot.connected { 
+    background: var(--green); 
+    box-shadow: 0 0 8px var(--green); 
+  }
+
+  .main { 
+    display: flex; 
+    gap: 20px; 
+    padding: 20px 24px; 
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar { 
+    width: 320px; 
+    flex-shrink: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover {
+    border-color: rgba(240, 185, 11, 0.25);
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: justify;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  .card-title svg {
+    margin-right: 6px;
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  .form-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .form-row label { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .form-row input, .form-row select {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 9px 12px;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+    transition: border-color .15s, box-shadow 0.15s;
+    font-family: inherit;
+  }
+  .form-row input:focus, .form-row select:focus { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn:hover { opacity: .9; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { box-shadow: 0 4px 12px var(--accent-glow); }
+  .btn-success { background: var(--green); color: #000; }
+  .btn-success:hover { box-shadow: 0 4px 12px var(--green-glow); }
+  .btn-danger  { background: var(--red);   color: #fff; }
+  .btn-danger:hover { box-shadow: 0 4px 12px var(--red-glow); }
+  
+  .btn-secondary {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-secondary:hover {
+    background: var(--border);
+  }
+  
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 11px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+
+  /* ── Toggle ── */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .toggle-label { font-size: 13px; font-weight: 600; }
+  .toggle {
+    position: relative;
+    width: 44px; height: 24px;
+    cursor: pointer;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; inset: 0;
+    background: var(--border);
+    border-radius: 24px;
+    transition: background .2s;
+  }
+  .slider::before {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    left: 3px; top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s;
+  }
+  .toggle input:checked + .slider { background: var(--green); }
+  .toggle input:checked + .slider::before { transform: translateX(20px); }
+
+  /* ── Settings fields inline ── */
+  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .settings-grid .form-row { margin-bottom: 0; }
+  .full-col { grid-column: 1 / -1; }
+
+  /* ── Main Content Area ── */
+  .content-area { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0; /* Prevents flex items from overflowing */
+  }
+  
+  .content-area .card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.01);
+  }
+  .table-header h2 {
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .table-header h2 span {
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--muted);
+  }
+
+  .table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  thead th {
+    padding: 12px 16px;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .2s; }
+  tbody tr:hover { background: rgba(255,255,255,.02); }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 12px 16px; vertical-align: middle; white-space: nowrap; }
+
+  .symbol-text {
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .side-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .side-badge.long { background: rgba(14,203,129,.12); color: var(--green); border: 1px solid rgba(14,203,129,.2); }
+  .side-badge.short { background: rgba(246,70,93,.12); color: var(--red); border: 1px solid rgba(246,70,93,.2); }
+
+  .pnl-pos { color: var(--green); font-weight: 600; }
+  .pnl-neg { color: var(--red); font-weight: 600; }
+
+  .status-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .status-badge-inline.triggered { background: rgba(14,203,129,.15); color: var(--green); border: 1px solid rgba(14,203,129,0.3); }
+  .status-badge-inline.waiting   { background: rgba(132,142,156,.1); color: var(--muted); border: 1px solid rgba(132,142,156,0.2); }
+
+  /* ── Edit modal ── */
+  .modal-bg {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 340px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+  .modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: var(--accent); }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+  .modal-actions .btn { flex: 1; }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    font-size: 13px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s, transform .3s;
+    pointer-events: none;
+    max-width: 360px;
+    z-index: 200;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  #toast.show { opacity: 1; transform: none; }
+  #toast.success { border-color: var(--green); color: var(--green); background: rgba(14,203,129,.05); }
+  #toast.error   { border-color: var(--red);   color: var(--red); background: rgba(246,70,93,.05); }
+  #toast.alert   { border-color: var(--accent); color: var(--accent); pointer-events: auto; font-weight: 600; background: rgba(240,185,11,0.05); }
+
+  .empty-state { text-align: center; padding: 48px; color: var(--muted); font-size: 13px; }
+  
+  .action-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .action-link:hover {
+    color: #fff;
+  }
+
+  .nav-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    width: 26px; height: 26px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .nav-btn-icon:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/></svg>
+    </div>
+    <h1>Binance Futures Unified Bot</h1>
+  </div>
+  <div class="header-status">
+    <div class="status-badge">
+      <div class="status-dot" id="dot"></div>
+      <span id="status-text">Đang kết nối...</span>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- API Connection -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>
+        Tài khoản Binance
+      </div>
+      <div id="saved-creds-banner" style="display:none;background:rgba(14,203,129,.05);border:1px solid rgba(14,203,129,.2);border-radius:6px;padding:10px;margin-bottom:12px;font-size:12px;color:var(--green);line-height:1.4;">
+        ✓ Đã lưu thông tin API Key — <a href="#" onclick="loadSavedCreds();return false" style="color:var(--accent);text-decoration:none;font-weight:600">Điền lại</a>
+        &nbsp;|&nbsp; <a href="#" onclick="deleteSavedCreds();return false" style="color:var(--red);text-decoration:none">Xoá</a>
+      </div>
+      <div class="form-row">
+        <label>API Key</label>
+        <input type="text" id="api-key" placeholder="Nhập API Key..."/>
+      </div>
+      <div class="form-row">
+        <label>Secret Key</label>
+        <input type="password" id="api-secret" placeholder="Nhập Secret Key..."/>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" style="flex:1" onclick="connect()">Kết nối</button>
+        <button class="btn" id="btn-disconnect" style="display:none;flex:0 0 auto;padding:9px 14px;background:var(--border);color:var(--text)" onclick="disconnect()" title="Ngắt kết nối">✕</button>
+      </div>
+    </div>
+
+    <!-- Trailing Stop Settings -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+        Trailing Stop
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Auto Trailing Stop</span>
+        <label class="toggle">
+          <input type="checkbox" id="ts-toggle" onchange="toggleTrailingStop(this.checked)"/>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div id="ts-settings">
+        <div class="settings-grid">
+          <div class="form-row">
+            <label>Default SL (%PNL)</label>
+            <input type="number" id="g-sl" value="37" min="0.1" step="0.5"/>
+          </div>
+          <div class="form-row">
+            <label>GAP (%)</label>
+            <input type="number" id="g-gap" value="25" min="0.1" step="0.5"/>
+          </div>
+          <div class="form-row full-col">
+            <label>Default PNL (%)</label>
+            <input type="number" id="g-pnl" value="5" min="0" step="0.5"/>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <button class="btn btn-success" onclick="saveSettings()">Lưu cài đặt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scanner Settings -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+        Cấu hình Scanner
+      </div>
+      <div class="form-row">
+        <label>Giá tối đa (USDT)</label>
+        <input type="number" step="0.01" id="sc-max-price" required>
+      </div>
+      <div class="settings-grid">
+        <div class="form-row">
+          <label>Timeframe</label>
+          <select id="sc-timeframe">
+            <option value="5m">5m</option>
+            <option value="15m" selected>15m</option>
+            <option value="30m">30m</option>
+            <option value="1h">1h</option>
+            <option value="4h">4h</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Nến tối thiểu</label>
+          <input type="number" id="sc-limit" min="3" max="10" required>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top: 10px;">
+        <label>Chu kỳ quét (Phút)</label>
+        <input type="number" id="sc-interval" min="1" required>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn btn-primary" style="flex:1" onclick="saveScannerConfig()">Lưu cấu hình</button>
+        <button class="btn btn-secondary" id="btn-scan-now" onclick="scanNow()" style="padding: 10px 12px;" title="Quét nến đỏ ngay lập tức">Quét ngay</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Content Area -->
+  <div class="content-area">
+    
+    <!-- Positions Panel -->
+    <div class="card">
+      <div class="table-header">
+        <h2>⚡ Lệnh đang mở <span id="pos-count">0 lệnh</span></h2>
+      </div>
+      <div class="table-container" id="positions-table-container">
+        <div class="empty-state">Chưa kết nối tài khoản Binance hoặc không có vị thế mở.</div>
+      </div>
+    </div>
+
+    <!-- Scanner Matches Panel -->
+    <div class="card">
+      <div class="table-header">
+        <h2>🔍 Kết quả quét nến đỏ (Ít nhất 3 nến đỏ liên tiếp) <span id="matches-count">0 cặp</span></h2>
+      </div>
+      <div class="table-container" id="matches-table-container">
+        <div class="empty-state">Chưa quét hoặc không tìm thấy cặp nào thỏa mãn.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3>Tùy chỉnh lệnh: <span id="modal-symbol" style="color:#fff"></span></h3>
+    <div class="form-row">
+      <label>Default SL (%PNL)</label>
+      <input type="number" id="m-sl" step="0.5" min="0.1"/>
+    </div>
+    <div class="form-row">
+      <label>GAP (%)</label>
+      <input type="number" id="m-gap" step="0.5" min="0.1"/>
+    </div>
+    <div class="form-row">
+      <label>Default PNL (%)</label>
+      <input type="number" id="m-pnl" step="0.5" min="0"/>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="resetOverride()" style="background:var(--border);color:var(--text)">Dùng chung</button>
+      <button class="btn btn-success" onclick="saveOverride()">Lưu</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Huỷ</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let ws = null;
+let positions = [];
+let editSymbol = null;
+let trailingOn = false;
+let position_overrides_local = {};
+
+// ── WebSocket ──────────────────────────────────────────────────────────────
+function connectWS() {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(`${proto}://${location.host}/ws`);
+  ws.onmessage = e => {
+    const msg = JSON.parse(e.data);
+    if (msg.type === 'positions') {
+      positions = msg.data;
+      renderPositionsTable(positions);
+    } else if (msg.type === 'trailing_stop') {
+      trailingOn = msg.enabled;
+      document.getElementById('ts-toggle').checked = msg.enabled;
+    } else if (msg.type === 'matches') {
+      renderMatchesTable(msg.data);
+    } else if (msg.type === 'sl_hit') {
+      const sign = msg.roe >= 0 ? '+' : '';
+      toastAlert(`🔴 Đã đóng ${msg.symbol} — SL chạm ${sign}${msg.roe.toFixed(2)}% (SL: ${msg.sl.toFixed(2)}%)`);
+    } else if (msg.type === 'gap_triggered') {
+      toastAlert(`🟢 ${msg.symbol} kích hoạt trailing — ROE ${msg.roe.toFixed(2)}%, SL bảo vệ +${msg.sl_pnl.toFixed(2)}%`);
+    }
+  };
+  ws.onclose = () => {
+    document.getElementById('dot').classList.remove('connected');
+    document.getElementById('status-text').textContent = 'Mất kết nối server. Đang kết nối lại...';
+    setTimeout(connectWS, 3000);
+  };
+  ws.onopen = () => {
+    // We are connected to the FastAPI websocket
+  };
+}
+connectWS();
+
+// ── Connect API ────────────────────────────────────────────────────────────
+let _savedKey = '';
+
+async function checkSavedCreds() {
+  const r = await fetch('/api/saved-credentials').then(x => x.json());
+  if (r.has_saved) {
+    _savedKey = r.api_key;
+    document.getElementById('saved-creds-banner').style.display = 'block';
+    document.getElementById('api-key').placeholder = r.api_key ? r.api_key.slice(0,8) + '••••••••' : 'Nhập API Key...';
+  }
+}
+
+async function loadSavedCreds() {
+  const r = await fetch('/api/saved-credentials').then(x => x.json());
+  if (r.has_saved) {
+    document.getElementById('api-key').value = r.api_key;
+    document.getElementById('api-secret').value = '';
+    document.getElementById('api-secret').placeholder = r.api_secret_masked + '  (để trống = dùng lại key cũ)';
+    toast('Đã điền API Key — nhập Secret Key để kết nối lại', '');
+  }
+}
+
+async function deleteSavedCreds() {
+  if (!confirm('Xoá thông tin API đã lưu?')) return;
+  await fetch('/api/saved-credentials', { method: 'DELETE' });
+  document.getElementById('saved-creds-banner').style.display = 'none';
+  document.getElementById('api-key').value = '';
+  document.getElementById('api-secret').value = '';
+  document.getElementById('api-key').placeholder = 'Nhập API Key...';
+  document.getElementById('api-secret').placeholder = 'Nhập Secret Key...';
+  toast('Đã xoá thông tin đã lưu', '');
+}
+
+async function connect() {
+  const key    = document.getElementById('api-key').value.trim();
+  const secret = document.getElementById('api-secret').value.trim();
+  if (!key && !secret && _savedKey) {
+    // trying to connect with pre-saved
+    toast('Đang kết nối lại...', '');
+  }
+  toast('Đang kết nối…', '');
+  const r = await api('/api/connect', 'POST', { api_key: key, api_secret: secret });
+  if (r.ok) {
+    setConnected(true);
+    toast(r.message, 'success');
+    document.getElementById('api-secret').value = '';
+    document.getElementById('api-secret').placeholder = '••••••••  (đã lưu)';
+    document.getElementById('saved-creds-banner').style.display = 'block';
+    const displayKey = key || _savedKey;
+    document.getElementById('api-key').placeholder = displayKey.slice(0,8) + '••••••••';
+  } else {
+    toast(r.message, 'error');
+  }
+}
+
+function setConnected(on) {
+  document.getElementById('dot').classList.toggle('connected', on);
+  document.getElementById('status-text').textContent = on ? 'Đã kết nối' : 'Chưa kết nối';
+  document.getElementById('btn-disconnect').style.display = on ? 'inline-block' : 'none';
+}
+
+async function disconnect() {
+  await api('/api/disconnect', 'POST', {});
+  setConnected(false);
+  toast('Đã ngắt kết nối', '');
+}
+
+// ── Trailing Stop ──────────────────────────────────────────────────────────
+async function toggleTrailingStop(enabled) {
+  const r = await api('/api/trailing-stop', 'POST', { enabled });
+  if (r.ok) {
+    toast(enabled ? 'Trailing Stop BẬT' : 'Trailing Stop TẮT', enabled ? 'success' : '');
+  }
+}
+
+async function saveSettings() {
+  const body = {
+    default_sl: parseFloat(document.getElementById('g-sl').value),
+    gap: parseFloat(document.getElementById('g-gap').value),
+    default_pnl: parseFloat(document.getElementById('g-pnl').value),
+  };
+  const r = await api('/api/settings', 'POST', body);
+  if (r.ok) toast('Đã lưu cài đặt chung', 'success');
+}
+
+// ── Scanner Config ─────────────────────────────────────────────────────────
+async function loadScannerConfig() {
+  try {
+    const config = await fetch('/api/scanner-config').then(r => r.json());
+    if (config) {
+      document.getElementById('sc-max-price').value = config.max_price_usdt || 10.0;
+      document.getElementById('sc-timeframe').value = config.timeframe || '15m';
+      document.getElementById('sc-limit').value = config.limit_candles || 4;
+      document.getElementById('sc-interval').value = config.interval_minutes || 15;
+    }
+  } catch (e) {
+    console.error("Lỗi khi tải cấu hình scanner:", e);
+  }
+}
+
+async function saveScannerConfig() {
+  const body = {
+    max_price_usdt: parseFloat(document.getElementById('sc-max-price').value),
+    timeframe: document.getElementById('sc-timeframe').value,
+    limit_candles: parseInt(document.getElementById('sc-limit').value),
+    interval_minutes: parseInt(document.getElementById('sc-interval').value)
+  };
+  
+  toast('Đang lưu cấu hình & khởi chạy quét...', '');
+  const r = await api('/api/scanner-config', 'POST', body);
+  if (r.status === 'success') {
+    toast('Đã lưu cấu hình scanner và bắt đầu quét lại!', 'success');
+  } else {
+    toast('Lỗi: ' + r.message, 'error');
+  }
+}
+
+async function scanNow() {
+  const btn = document.getElementById('btn-scan-now');
+  const oldText = btn.textContent;
+  btn.textContent = 'Đang quét...';
+  btn.disabled = true;
+  
+  try {
+    toast('Đang ra lệnh quét nến đỏ ngay lập tức...', '');
+    const r = await api('/api/scan/now', 'POST', {});
+    if (r.status === 'success') {
+      toast('Đã gửi yêu cầu quét. Kết quả sẽ hiển thị trong giây lát.', 'success');
+    } else {
+      toast('Yêu cầu thất bại.', 'error');
+    }
+  } catch (e) {
+    toast('Lỗi kết nối.', 'error');
+  } finally {
+    setTimeout(() => {
+      btn.textContent = oldText;
+      btn.disabled = false;
+    }, 2000);
+  }
+}
+
+// ── Render Positions Table ──────────────────────────────────────────────────
+function renderPositionsTable(data) {
+  const container = document.getElementById('positions-table-container');
+  document.getElementById('pos-count').textContent = `${data.length} lệnh`;
+
+  if (!data.length) {
+    container.innerHTML = '<div class="empty-state">Không có lệnh đang mở hoặc chưa kết nối tài khoản.</div>';
+    return;
+  }
+
+  const rows = data.map(p => {
+    const side = p.side;
+    const roe = p.roe || 0;
+    const pnlClass = roe >= 0 ? 'pnl-pos' : 'pnl-neg';
+    const pnlSign = roe >= 0 ? '+' : '';
+    const s = p.settings || {};
+    const triggered = p.gap_triggered;
+    const peakRoe = p.peak_roe || 0;
+    const currentSlPnl = p.current_sl_pnl;
+
+    let slDisplay, slClass;
+    if (!triggered) {
+      slDisplay = `-${(s.default_sl || 0).toFixed(1)}%`;
+      slClass = 'pnl-neg';
+    } else if (currentSlPnl !== null && currentSlPnl !== undefined) {
+      const sign = currentSlPnl >= 0 ? '+' : '';
+      slDisplay = `${sign}${currentSlPnl.toFixed(2)}%`;
+      slClass = currentSlPnl >= 0 ? 'pnl-pos' : 'pnl-neg';
+    } else {
+      slDisplay = '—';
+      slClass = '';
+    }
+
+    let distToSL = '';
+    if (triggered && currentSlPnl !== null && currentSlPnl !== undefined) {
+      const dist = roe - currentSlPnl;
+      distToSL = `<span style="color:var(--muted);font-size:11px">(còn ${dist.toFixed(1)}%)</span>`;
+    }
+
+    let progressBar = '';
+    if (triggered && peakRoe > 0) {
+      const gap = s.gap || 1;
+      const progress = Math.min(100, ((peakRoe - gap) / gap) * 100);
+      progressBar = `<div style="width:60px;height:4px;background:var(--border);border-radius:2px;margin-top:4px">
+        <div style="width:${progress}%;height:100%;background:var(--green);border-radius:2px;transition:width .3s"></div>
+      </div>`;
+    }
+
+    const pnlVal = typeof p.pnl === 'number' ? p.pnl : parseFloat(p.pnl || 0);
+    const pnlUSDT = (pnlVal >= 0 ? '+' : '') + pnlVal.toFixed(2) + ' USDT';
+    const pnlUSDTClass = pnlVal >= 0 ? 'pnl-pos' : 'pnl-neg';
+
+    return `<tr>
+      <td><span class="symbol-text">${p.symbol}</span>${position_overrides_local[p.symbol] ? ' <span style="color:var(--accent);font-size:10px" title="Đang cấu hình riêng">●</span>' : ''}</td>
+      <td><span class="side-badge ${side.toLowerCase()}">${side}</span></td>
+      <td>${parseFloat(p.positionAmt).toLocaleString()}</td>
+      <td>${fmtPrice(p.entryPrice)}</td>
+      <td>${fmtPrice(p.markPrice)}</td>
+      <td>${fmtUsdt(p.margin)}</td>
+      <td class="${pnlClass}">${pnlSign}${roe.toFixed(2)}%</td>
+      <td class="${pnlUSDTClass}">${pnlUSDT}</td>
+      <td>
+        <span class="status-badge-inline ${triggered ? 'triggered' : 'waiting'}">
+          ${triggered ? '▲ Trailing' : `⏳ ≥${(s.gap||0).toFixed(0)}%`}
+        </span>
+        ${triggered ? `<div style="color:var(--muted);font-size:10px;margin-top:2px">Peak: <b style="color:var(--green)">+${peakRoe.toFixed(2)}%</b></div>${progressBar}` : ''}
+      </td>
+      <td class="${slClass}"><b>${slDisplay}</b><br/>${distToSL}</td>
+      <td style="color:var(--muted);font-size:11px">-${(s.default_sl||0).toFixed(0)}% / +${(s.gap||0).toFixed(0)}%</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          <button class="btn-sm btn-primary" onclick="openEdit('${p.symbol}')" style="color:#000;">Sửa</button>
+          <button class="btn-sm" style="background:var(--red);color:#fff" onclick="confirmClose('${p.symbol}','${side}',${p.positionAmt})">Đóng</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Side</th>
+          <th>Size</th>
+          <th>Entry Price</th>
+          <th>Mark Price</th>
+          <th>Margin</th>
+          <th>ROE %</th>
+          <th>PNL (USDT)</th>
+          <th>Trailing Status</th>
+          <th>Current SL</th>
+          <th>SL / GAP</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Render Matches Table ────────────────────────────────────────────────────
+function renderMatchesTable(matches) {
+  const container = document.getElementById('matches-table-container');
+  document.getElementById('matches-count').textContent = `${matches.length} cặp`;
+
+  if (!matches.length) {
+    container.innerHTML = '<div class="empty-state">Chưa tìm thấy hoặc không có cặp nào thỏa mãn trong chu kỳ quét gần nhất.</div>';
+    return;
+  }
+
+  const rows = matches.map(match => {
+    const cleanSymbol = match.symbol.replace('/USDT:USDT', 'USDT').replace('/', '');
+    const binanceUrl = `https://www.binance.com/en/futures/${cleanSymbol}`;
+    
+    return `<tr>
+      <td><span class="symbol-text">${match.symbol}</span></td>
+      <td><span style="color:var(--green)">● 3 nến đỏ liên tiếp</span></td>
+      <td style="color:var(--muted)">${match.timestamp || 'N/A'}</td>
+      <td>
+        <a href="${binanceUrl}" target="_blank" class="action-link">Xem biểu đồ Binance ↗</a>
+      </td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Cặp giao dịch</th>
+          <th>Trạng thái lọc</th>
+          <th>Thời gian phát hiện</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function fmtPrice(v) {
+  const n = parseFloat(v);
+  if (isNaN(n)) return '—';
+  return n < 1 ? n.toFixed(6) : n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+}
+
+function fmtUsdt(v) {
+  const n = parseFloat(v);
+  if (isNaN(n) || n === 0) return '—';
+  return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT';
+}
+
+// ── Edit Modal ─────────────────────────────────────────────────────────────
+function openEdit(symbol) {
+  editSymbol = symbol;
+  const pos = positions.find(p => p.symbol === symbol);
+  const s = pos ? pos.settings : { default_sl: 37, gap: 25, default_pnl: 5 };
+  document.getElementById('modal-symbol').textContent = symbol;
+  document.getElementById('m-sl').value  = s.default_sl;
+  document.getElementById('m-gap').value = s.gap;
+  document.getElementById('m-pnl').value = s.default_pnl;
+  document.getElementById('modal').classList.add('open');
+}
+
+// Close Modal
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  editSymbol = null;
+}
+
+async function saveOverride() {
+  if (!editSymbol) return;
+  const body = {
+    symbol: editSymbol,
+    default_sl: parseFloat(document.getElementById('m-sl').value),
+    gap: parseFloat(document.getElementById('m-gap').value),
+    default_pnl: parseFloat(document.getElementById('m-pnl').value),
+  };
+  const r = await api('/api/position-override', 'POST', body);
+  if (r.ok) {
+    position_overrides_local[editSymbol] = true;
+    toast(`Đã lưu cài đặt riêng cho ${editSymbol}`, 'success');
+    closeModal();
+  }
+}
+
+async function resetOverride() {
+  if (!editSymbol) return;
+  const r = await fetch(`/api/position-override/${editSymbol}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (data.ok) {
+    delete position_overrides_local[editSymbol];
+    toast(`${editSymbol} đã chuyển về dùng cài đặt chung`, 'success');
+    closeModal();
+  }
+}
+
+// ── Close Position ─────────────────────────────────────────────────────────
+function confirmClose(symbol, side, qty) {
+  const pos = positions.find(p => p.symbol === symbol);
+  const roe = pos ? pos.roe.toFixed(2) : '?';
+  const pnl = pos ? pos.pnl.toFixed(2) : '?';
+  const pnlSign = pos && pos.pnl >= 0 ? '+' : '';
+  if (!confirm(`Đóng lệnh ${symbol} (${side})?\n\nROE: ${roe}%\nPNL: ${pnlSign}${pnl} USDT\n\nXác nhận đóng lệnh ngay bằng Market Order?`)) return;
+  api('/api/close-position', 'POST', { symbol, side, qty: parseFloat(qty) })
+    .then(r => toast(r.message, r.ok ? 'success' : 'error'));
+}
+
+// ── Utils ──────────────────────────────────────────────────────────────────
+async function api(url, method, body) {
+  const r = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return r.json();
+}
+
+let toastTimer;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+}
+
+function toastAlert(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show alert';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 8000);
+}
+
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
+
+// Load everything initially
+Promise.all([
+  fetch('/api/status').then(r => r.json()),
+  checkSavedCreds(),
+  loadScannerConfig(),
+]).then(([d]) => {
+  if (d.connected) setConnected(true);
+  if (d.global_settings) {
+    document.getElementById('g-sl').value  = d.global_settings.default_sl;
+    document.getElementById('g-gap').value = d.global_settings.gap;
+    document.getElementById('g-pnl').value = d.global_settings.default_pnl;
+  }
+  document.getElementById('ts-toggle').checked = d.trailing_stop_on;
+});
+</script>
+</body>
+</html>

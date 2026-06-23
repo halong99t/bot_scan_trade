@@ -1,0 +1,6 @@
+{
+    "max_price_usdt": 4.0,
+    "timeframe": "15m",
+    "limit_candles": 4,
+    "interval_minutes": 15
+}

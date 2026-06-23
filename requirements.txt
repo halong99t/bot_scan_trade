@@ -1,0 +1,8 @@
+fastapi==0.111.0
+uvicorn==0.29.0
+python-binance==1.0.19
+websockets==12.0
+python-dotenv==1.0.1
+aiofiles==23.2.1
+ccxt
+schedule

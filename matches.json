@@ -1,0 +1,390 @@
+[
+    {
+        "symbol": "XRP/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:02"
+    },
+    {
+        "symbol": "XLM/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:02"
+    },
+    {
+        "symbol": "BAT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:03"
+    },
+    {
+        "symbol": "VET/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:03"
+    },
+    {
+        "symbol": "ALGO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:03"
+    },
+    {
+        "symbol": "ZIL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:03"
+    },
+    {
+        "symbol": "ICX/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:04"
+    },
+    {
+        "symbol": "STORJ/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:04"
+    },
+    {
+        "symbol": "UNI/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:04"
+    },
+    {
+        "symbol": "NEAR/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:05"
+    },
+    {
+        "symbol": "SKL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:05"
+    },
+    {
+        "symbol": "RVN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:06"
+    },
+    {
+        "symbol": "HBAR/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:06"
+    },
+    {
+        "symbol": "OGN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:06"
+    },
+    {
+        "symbol": "1000SHIB/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:07"
+    },
+    {
+        "symbol": "MASK/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:07"
+    },
+    {
+        "symbol": "1000XEC/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:07"
+    },
+    {
+        "symbol": "API3/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:08"
+    },
+    {
+        "symbol": "JASMY/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:08"
+    },
+    {
+        "symbol": "STG/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:09"
+    },
+    {
+        "symbol": "T/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:09"
+    },
+    {
+        "symbol": "ACH/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:10"
+    },
+    {
+        "symbol": "HFT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:10"
+    },
+    {
+        "symbol": "UMA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:11"
+    },
+    {
+        "symbol": "BIGTIME/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:12"
+    },
+    {
+        "symbol": "WAXP/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:12"
+    },
+    {
+        "symbol": "POWR/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:12"
+    },
+    {
+        "symbol": "ORDI/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:13"
+    },
+    {
+        "symbol": "STEEM/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:13"
+    },
+    {
+        "symbol": "ILV/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:13"
+    },
+    {
+        "symbol": "BEAMX/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:13"
+    },
+    {
+        "symbol": "1000SATS/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:14"
+    },
+    {
+        "symbol": "AUCTION/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:14"
+    },
+    {
+        "symbol": "MANTA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:14"
+    },
+    {
+        "symbol": "JUP/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:15"
+    },
+    {
+        "symbol": "ZETA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:15"
+    },
+    {
+        "symbol": "DYM/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:15"
+    },
+    {
+        "symbol": "PIXEL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:15"
+    },
+    {
+        "symbol": "TON/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:15"
+    },
+    {
+        "symbol": "AEVO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:16"
+    },
+    {
+        "symbol": "BANANA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:17"
+    },
+    {
+        "symbol": "RARE/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:17"
+    },
+    {
+        "symbol": "DOGS/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:17"
+    },
+    {
+        "symbol": "FIDA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:18"
+    },
+    {
+        "symbol": "GOAT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:19"
+    },
+    {
+        "symbol": "SAFE/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:19"
+    },
+    {
+        "symbol": "SANTOS/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:19"
+    },
+    {
+        "symbol": "BAN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:19"
+    },
+    {
+        "symbol": "SCRT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:20"
+    },
+    {
+        "symbol": "KOMA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:20"
+    },
+    {
+        "symbol": "ME/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:21"
+    },
+    {
+        "symbol": "AIXBT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:21"
+    },
+    {
+        "symbol": "PHA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:22"
+    },
+    {
+        "symbol": "MELANIA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:23"
+    },
+    {
+        "symbol": "VTHO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:23"
+    },
+    {
+        "symbol": "ANIME/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:23"
+    },
+    {
+        "symbol": "LAYER/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:23"
+    },
+    {
+        "symbol": "KAITO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:24"
+    },
+    {
+        "symbol": "BMT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:24"
+    },
+    {
+        "symbol": "BROCCOLIF3B/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:24"
+    },
+    {
+        "symbol": "WAL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:25"
+    },
+    {
+        "symbol": "GUN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:25"
+    },
+    {
+        "symbol": "BABY/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:25"
+    },
+    {
+        "symbol": "STO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:26"
+    },
+    {
+        "symbol": "FHE/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:26"
+    },
+    {
+        "symbol": "WCT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:26"
+    },
+    {
+        "symbol": "JST/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:26"
+    },
+    {
+        "symbol": "AIOT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "HAEDAL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "ASR/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "B2/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "DOOD/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "OG/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:27"
+    },
+    {
+        "symbol": "A/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:28"
+    },
+    {
+        "symbol": "1000000BOB/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:28"
+    },
+    {
+        "symbol": "HOME/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:28"
+    },
+    {
+        "symbol": "F/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:29"
+    },
+    {
+        "symbol": "IDOL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:29"
+    },
+    {
+        "symbol": "TAC/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:30"
+    },
+    {
+        "symbol": "SLP/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:30"
+    },
+    {
+        "symbol": "ZORA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:30"
+    },
+    {
+        "symbol": "TOWNS/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:31"
+    },
+    {
+        "symbol": "USELESS/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:31"
+    },
+    {
+        "symbol": "XPL/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:31"
+    },
+    {
+        "symbol": "Q/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:32"
+    },
+    {
+        "symbol": "TAKE/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:32"
+    },
+    {
+        "symbol": "SKY/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:33"
+    },
+    {
+        "symbol": "TOSHI/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:33"
+    },
+    {
+        "symbol": "BARD/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:33"
+    },
+    {
+        "symbol": "LIGHT/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:34"
+    },
+    {
+        "symbol": "XAN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:34"
+    },
+    {
+        "symbol": "ALLO/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:37"
+    },
+    {
+        "symbol": "GUA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:37"
+    },
+    {
+        "symbol": "MEGA/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:39"
+    },
+    {
+        "symbol": "CFG/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:40"
+    },
+    {
+        "symbol": "AIGENSYN/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:40"
+    },
+    {
+        "symbol": "STAR/USDT:USDT",
+        "timestamp": "2026-06-22 15:31:41"
+    }
+]
